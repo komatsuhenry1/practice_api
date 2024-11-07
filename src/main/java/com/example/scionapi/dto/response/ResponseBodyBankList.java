@@ -1,8 +1,10 @@
-package com.example.scionapi.dto;
+package com.example.scionapi.dto.response;
 
 import java.util.List;
 
-public record BodyBank(
+public record ResponseBodyBankList(
+
+        Long id,
 
         String name,
 
@@ -13,6 +15,6 @@ public record BodyBank(
         String address,
 
         // (Opcional) Lista de IDs dos clientes associados
-        List<Long> clientIds
+        List<Long> clientIds // retorna uma lista apenas com os ids, na requisicao
 ) {
 }

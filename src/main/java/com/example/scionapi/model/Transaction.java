@@ -52,4 +52,20 @@ public class Transaction {
     public String getDescription() {return description;}
 
     public void setDescription(String description) {this.description = description;}
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

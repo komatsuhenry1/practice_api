@@ -78,4 +78,20 @@ public class Account {
     public String getAccountNumber() {return accountNumber;}
 
     public void setAccountNumber(String accountNumber) {this.accountNumber = accountNumber;}
+
+    public Long getAccount_id() {
+        return account_id;
+    }
+
+    public void setAccount_id(Long account_id) {
+        this.account_id = account_id;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 }

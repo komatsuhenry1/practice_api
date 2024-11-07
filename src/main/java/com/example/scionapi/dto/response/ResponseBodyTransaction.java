@@ -1,6 +1,8 @@
-package com.example.scionapi.dto;
+package com.example.scionapi.dto.response;
 
-public record BodyTransaction(
+public record ResponseBodyTransaction(
+
+        Long id,
 
         String amount,
 
@@ -12,5 +14,6 @@ public record BodyTransaction(
         Long clientId,
 
         Long accountId
+
 ) {
 }

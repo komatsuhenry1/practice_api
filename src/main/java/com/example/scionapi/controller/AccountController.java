@@ -1,6 +1,7 @@
 package com.example.scionapi.controller;
 
-import com.example.scionapi.dto.BodyAccount;
+import com.example.scionapi.dto.request.RequestBodyAccount;
+import com.example.scionapi.dto.response.ResponseBodyAccount;
 import com.example.scionapi.model.Account;
 import com.example.scionapi.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody BodyAccount bodyAccount) {
+    public ResponseEntity<ResponseBodyAccount> createAccount(@RequestBody RequestBodyAccount bodyAccount) {
         return ResponseEntity.ok(accountService.createAccount(bodyAccount));
     }
 

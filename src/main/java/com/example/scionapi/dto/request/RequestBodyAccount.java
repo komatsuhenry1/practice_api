@@ -1,8 +1,6 @@
-package com.example.scionapi.dto;
+package com.example.scionapi.dto.request;
 
-import java.util.List;
-
-public record BodyAccount(
+public record RequestBodyAccount(
 
         String accountNumber,
 

@@ -1,13 +1,12 @@
 package com.example.scionapi.service;
 
-import com.example.scionapi.dto.BodyAccount;
+import com.example.scionapi.dto.request.RequestBodyAccount;
+import com.example.scionapi.dto.response.ResponseBodyAccount;
 import com.example.scionapi.model.Account;
-import com.example.scionapi.model.Bank;
-import com.example.scionapi.model.Client;
 import com.example.scionapi.repository.AccountRepository;
 import com.example.scionapi.repository.BankRepository;
 import com.example.scionapi.repository.ClientRepository;
-import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +36,8 @@ public class AccountService {
 //                .orElseThrow(() -> new RuntimeException("Account was not found!"))
     }
 
-    public Account createAccount(BodyAccount bodyAccount) {
+    public ResponseBodyAccount createAccount(RequestBodyAccount bodyAccount) {
         //        verifyAccount(bodyAccount.accountNumber());
-
 
         Account account = new Account();
         account.setAccountNumber(bodyAccount.accountNumber());
@@ -47,7 +45,15 @@ public class AccountService {
         account.setBalance(bodyAccount.balance());
         account.setStatus(bodyAccount.status());
 
-        return accountRepository.save(account);
+        account = accountRepository.save(account);
+
+        return new ResponseBodyAccount(
+                account.getAccount_id(),
+                account.getAccountNumber(),
+                account.getAccountType(),
+                account.getBalance(),
+                account.getStatus()
+        );
     }
 
 //    public void verifyAccount(String number) {

@@ -79,4 +79,17 @@ public class Bank {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.scionapi.controller;
 
-import com.example.scionapi.dto.BodyTransaction;
+import com.example.scionapi.dto.request.RequestBodyTransaction;
+import com.example.scionapi.dto.response.ResponseBodyTransaction;
 import com.example.scionapi.model.Transaction;
 import com.example.scionapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody BodyTransaction bodyTransaction) {
+    public ResponseEntity<ResponseBodyTransaction> createTransaction(@RequestBody RequestBodyTransaction bodyTransaction) {
         return ResponseEntity.ok(transactionService.createTransaction(bodyTransaction));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody BodyTransaction bodyTransaction) {
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody RequestBodyTransaction bodyTransaction) {
         return ResponseEntity.ok(transactionService.updateTransaction(id, bodyTransaction));
     }
 

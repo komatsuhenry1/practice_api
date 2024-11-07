@@ -1,6 +1,7 @@
 package com.example.scionapi.controller;
 
-import com.example.scionapi.dto.BodyClient;
+import com.example.scionapi.dto.request.RequestBodyClient;
+import com.example.scionapi.dto.response.ResponseBodyClient;
 import com.example.scionapi.model.Client;
 import com.example.scionapi.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody BodyClient bodyClient){
+    public ResponseEntity<ResponseBodyClient> createClient(@RequestBody RequestBodyClient bodyClient){
         return ResponseEntity.ok(clientService.createClient(bodyClient));
     }
 

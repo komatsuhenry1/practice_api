@@ -1,8 +1,11 @@
 package com.example.scionapi.service;
 
-import com.example.scionapi.dto.BodyClient;
+import com.example.scionapi.dto.request.RequestBodyClient;
+import com.example.scionapi.dto.response.ResponseBodyClient;
+import com.example.scionapi.model.Account;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.model.Client;
+import com.example.scionapi.repository.AccountRepository;
 import com.example.scionapi.repository.BankRepository;
 import com.example.scionapi.repository.ClientRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,6 +23,8 @@ public class ClientService {
     //injecao para poder pegar os atributos de estrangeiros da tabela bank
     @Autowired
     private BankRepository bankRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     //get all
     public List<Client> getAllClient() {
@@ -33,8 +38,12 @@ public class ClientService {
     }
 
     //post
-    public Client createClient(BodyClient bodyClient) {
+    public ResponseBodyClient createClient(RequestBodyClient bodyClient) {
         verifyClient(bodyClient.cpf());
+        Account account = accountRepository.findById(bodyClient.account_id())
+                .orElseThrow(() -> new RuntimeException("Account " + bodyClient.account_id() + "was not found!"));
+        Bank bank = bankRepository.findById(bodyClient.bank_id())
+                .orElseThrow(() -> new EntityNotFoundException("Bank "  + bodyClient.bank_id() +  " was not found!"));
 
         Client client = new Client();
         client.setName(bodyClient.name());
@@ -42,8 +51,21 @@ public class ClientService {
         client.setCpf(bodyClient.cpf());
         client.setEmail(bodyClient.email());
         client.setPhone(bodyClient.phone());
+        client.setAccount(account);
+        client.setBank(bank);
 
-        return clientRepository.save(client);
+        client = clientRepository.save(client);
+
+        return new ResponseBodyClient(
+                client.getId(),
+                client.getName(),
+                client.getPhone(),
+                client.getCpf(),
+                client.getEmail(),
+                client.getAddress(),
+                client.getBank().getId(),
+                client.getAccount().getId()
+        );
     }
 
     //verifica se o cpf ja existe na tabela

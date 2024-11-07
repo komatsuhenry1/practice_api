@@ -1,11 +1,15 @@
 package com.example.scionapi.service;
 
 
-import com.example.scionapi.dto.BodyBank;
+import com.example.scionapi.dto.request.RequestBodyBank;
+import com.example.scionapi.dto.request.RequestBodyBankClient;
+import com.example.scionapi.dto.response.ResponseBodyBank;
+import com.example.scionapi.dto.response.ResponseBodyBankList;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.model.Client;
 import com.example.scionapi.repository.BankRepository;
 import com.example.scionapi.repository.ClientRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,27 +29,86 @@ public class BankService {
         return bankRepository.findAll();
     }
 
-    //get by name | não é mais usado, agora é procurado por ID
-//    public Bank getBankByName(String name){
-//        return bankRepository.findByName(name);
-//    }
+    //get by name ( retorna sem a lista de client)
+    public ResponseBodyBank getBankByName(String name) {
+        Bank bank = bankRepository.findByName(name);
 
-    //get by id
-    public Bank getBankById(Long id){
-        return bankRepository.findById(id).orElseThrow(() -> new RuntimeException("Bank was not found.")); //joga excecao se n achar
+        return new ResponseBodyBank(
+                bank.getId(),
+                bank.getName(),
+                bank.getEmail(),
+                bank.getPhone(),
+                bank.getAddress()
+        );
+    }
+
+    //get by id ( retorna com lista de client)
+    public ResponseBodyBankList getBankById(Long id){
+        Bank bank = bankRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Bank not found"));
+
+        List<Long> clientIds = bank.getClients().stream()
+                .map(Client::getId)
+                .toList();
+
+        return new ResponseBodyBankList(
+                bank.getId(),
+                bank.getName(),
+                bank.getEmail(),
+                bank.getPhone(),
+                bank.getAddress(),
+                clientIds
+        );
     }
 
     //post
-    public Bank createBank(BodyBank bodybank){
+    public ResponseBodyBankList createBankWithClient(RequestBodyBankClient bodybank) {
         verifyBank(bodybank.name());
+
+        List<Client> clients = clientRepository.findAllById(bodybank.clientIds());
+
         Bank bank = new Bank();
         bank.setName(bodybank.name());
         bank.setEmail(bodybank.email());
         bank.setPhone(bodybank.phone());
         bank.setAddress(bodybank.address());
 
-        return bankRepository.save(bank);
+        bank.setClients(clients);
+
+        bank = bankRepository.save(bank);
+
+        List<Long> clientIds = clients.stream()
+                .map(Client::getId)
+                .toList();
+
+        return new ResponseBodyBankList(
+                bank.getId(),
+                bank.getName(),
+                bank.getEmail(),
+                bank.getPhone(),
+                bank.getAddress(),
+                clientIds
+        );
     }
+
+    public ResponseBodyBank createBank(RequestBodyBank bodybank) {
+        verifyBank(bodybank.name());
+
+        Bank bank = new Bank();
+        bank.setName(bodybank.name());
+        bank.setEmail(bodybank.email());
+        bank.setPhone(bodybank.phone());
+        bank.setAddress(bodybank.address());
+
+        return new ResponseBodyBank(
+                bank.getId(),
+                bank.getName(),
+                bank.getEmail(),
+                bank.getPhone(),
+                bank.getAddress()
+        );
+    }
+
 
     //verifica se esse objeto ja esta salvo no db atraves do nome, caso sim ele retorna uma excessao
     public void verifyBank(String name) {
@@ -83,7 +146,5 @@ public class BankService {
         Bank bank = findBankById(id);
         bankRepository.deleteById(bank.getId());
     }
-
-
 
 }
