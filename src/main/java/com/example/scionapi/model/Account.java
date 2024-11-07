@@ -9,12 +9,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //TODAS RELAÇÕES EM NOSSO ESQUEMA DE BANCO DE DADOS:
 //bank - client (um banco tem varios clientes)
 //client - transaction ( um cliente tem varias transacoes)
-//client - account (um cliente tem varias conta)
+//client - account (um cliente tem uma conta)
 //account - transaction (uma conta tem varias transacoes)
 
 
@@ -27,7 +28,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long account_id;
 
     private String accountNumber;
 
@@ -37,13 +38,17 @@ public class Account {
 
     private String status;
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Transaction> transactions = new ArrayList<>();
+
 
     public Long getId() {
-        return id;
+        return account_id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.account_id = account_id;
     }
 
     public String getAccountType() {

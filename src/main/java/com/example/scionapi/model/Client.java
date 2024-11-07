@@ -7,12 +7,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //TODAS RELAÇÕES EM NOSSO ESQUEMA DE BANCO DE DADOS:
 //bank - client (um banco tem varios clientes)
 //client - transaction ( um cliente tem varias transacoes)
-//client - account (um cliente tem varias conta)
+//client - account (um cliente tem uma conta)
 //account - transaction (uma conta tem varias transacoes)
 
 @Builder
@@ -36,6 +37,22 @@ public class Client {
     private String email;
 
     private String address;
+
+    //chave estrangeira na tabela client, que vem do id de bank
+    @ManyToOne
+    @JoinColumn(name = "bank_id", nullable = false)
+    private Bank bank;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    //mapped by indica que alguma outra tabela vai herdar de client, no nosso caso é a tabela transaction
+    //cascade = propaga as operações de persistencia do client para os transaction
+    //remove as trasacoes órfãos quando nao estao mais associados a nenhum cliente
+    @JsonIgnore // quando eu der um get de Client, ele nao retorna a lista de transaction no json
+    private List<Transaction> transactions = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public Long getId() {return id;}
 

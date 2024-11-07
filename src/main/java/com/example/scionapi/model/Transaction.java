@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 //TODAS RELAÇÕES EM NOSSO ESQUEMA DE BANCO DE DADOS:
 //bank - client (um banco tem varios clientes)
 //client - transaction ( um cliente tem varias transacoes)
-//client - account (um cliente tem varias conta)
+//client - account (um cliente tem uma conta)
 //account - transaction (uma conta tem varias transacoes)
 
 @Data
@@ -27,6 +27,15 @@ public class Transaction {
     private String transactionDate;
 
     private String description;
+
+    //chave estrangeira na tabela transaction, que vem do id de client
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 
     public Long getId() {return id;}
 
