@@ -1,22 +1,20 @@
 package com.example.scionapi.model;
 
 
-import com.example.scionapi.repository.AccountRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 //TODAS RELAÇÕES EM NOSSO ESQUEMA DE BANCO DE DADOS:
-//bank - client (um banco tem varios clientes)
+//bank - client (um banco tem varios clientes) OK
 //client - transaction ( um cliente tem varias transacoes)
 //client - account (um cliente tem uma conta)
-//account - transaction (uma conta tem varias transacoes)
+//account - transaction (uma conta tem varias transacoes) OK
 
 
 @Data

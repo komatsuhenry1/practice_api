@@ -8,9 +8,7 @@ public record RequestBodyAccount(
 
         String balance,
 
-        String status,
+        String status
 
-        // ID do cliente associado
-        Long clientId
 ) {
 }

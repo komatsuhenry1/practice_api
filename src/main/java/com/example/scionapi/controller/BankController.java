@@ -19,36 +19,43 @@ public class BankController {
     @Autowired
     private BankService bankService;
 
+    //get all banks
     @GetMapping("/get_banks")
     public ResponseEntity<List<Bank>> getBanks() {
         return ResponseEntity.ok(bankService.getAllBanks());
     }
 
+    //get de bank passando name
     @GetMapping("/name/{name}")
     public ResponseEntity<ResponseBodyBank> getBankByName(@PathVariable String name){
         return ResponseEntity.ok(bankService.getBankByName(name));
     }
 
+    //get bank por id
     @GetMapping("{bank_id}")
     public ResponseEntity<ResponseBodyBankList> getBankById(@PathVariable Long bank_id) {
         return ResponseEntity.ok(bankService.getBankById(bank_id));
     }
 
+    //post passando lista de id
     @PostMapping("/bank_client")
     public ResponseEntity<ResponseBodyBankList> createBankWithClient(@RequestBody RequestBodyBankClient bodyBank) {
         return ResponseEntity.ok(bankService.createBankWithClient(bodyBank));
     }
 
+    //post sem lista de clientes
     @PostMapping
     public ResponseEntity<ResponseBodyBank> createBank(@RequestBody RequestBodyBank bodyBank) {
         return ResponseEntity.ok(bankService.createBank(bodyBank));
     }
 
+    //update
     @PutMapping("{id}")
     public ResponseEntity<Bank> updateBank(@PathVariable Long id, @RequestBody Bank bank) {
         return ResponseEntity.ok(bankService.updateBank(id, bank));
     }
 
+    //deletar client
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteBank(@PathVariable Long id) {
         bankService.deleteBank(id);

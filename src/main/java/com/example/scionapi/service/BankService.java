@@ -24,11 +24,13 @@ public class BankService {
     @Autowired
     private ClientRepository clientRepository;
 
+    //GET
     //get all
     public List<Bank> getAllBanks() {
         return bankRepository.findAll();
     }
 
+    //GET
     //get by name ( retorna sem a lista de client)
     public ResponseBodyBank getBankByName(String name) {
         Bank bank = bankRepository.findByName(name);
@@ -42,10 +44,11 @@ public class BankService {
         );
     }
 
+    //GET
     //get by id ( retorna com lista de client)
     public ResponseBodyBankList getBankById(Long id){
         Bank bank = bankRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Bank not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Bank " + id + " was  found"));
 
         List<Long> clientIds = bank.getClients().stream()
                 .map(Client::getId)
@@ -61,17 +64,18 @@ public class BankService {
         );
     }
 
-    //post
-    public ResponseBodyBankList createBankWithClient(RequestBodyBankClient bodybank) {
-        verifyBank(bodybank.name());
+    //POST
+    //cria bank passando lista de client
+    public ResponseBodyBankList createBankWithClient(RequestBodyBankClient requestBodyBankClient) {
+        verifyBank(requestBodyBankClient.name());
 
-        List<Client> clients = clientRepository.findAllById(bodybank.clientIds());
+        List<Client> clients = clientRepository.findAllById(requestBodyBankClient.clientIds());
 
         Bank bank = new Bank();
-        bank.setName(bodybank.name());
-        bank.setEmail(bodybank.email());
-        bank.setPhone(bodybank.phone());
-        bank.setAddress(bodybank.address());
+        bank.setName(requestBodyBankClient.name());
+        bank.setEmail(requestBodyBankClient.email());
+        bank.setPhone(requestBodyBankClient.phone());
+        bank.setAddress(requestBodyBankClient.address());
 
         bank.setClients(clients);
 
