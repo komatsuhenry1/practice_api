@@ -28,13 +28,17 @@ public class TransactionController {
 
     //GET
     //por id
-    @GetMapping("{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ResponseBodyTransaction> getTransactionById(@PathVariable Long id) {
         return ResponseEntity.ok(transactionService.getTransactionById(id));
     }
 
     //GET
     //por transactionDate
+    @GetMapping("/transactionDate/{transactionDate}")
+    public ResponseEntity<ResponseBodyTransaction> searchTransactionByDate(@PathVariable String transactionDate) {
+        return ResponseEntity.ok(transactionService.searchTransactionByDate(transactionDate));
+    }
 
 
     //POST
@@ -46,7 +50,7 @@ public class TransactionController {
 
     //POST
     //passando apenas atributos de transaction
-    @PostMapping("/post_transaction")
+    @PostMapping
     public ResponseEntity<ResponseBodyTransaction> createTransaction(@RequestBody RequestBodyTransaction bodyTransaction) {
         return ResponseEntity.ok(transactionService.createTransaction(bodyTransaction));
     }

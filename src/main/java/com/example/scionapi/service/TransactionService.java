@@ -34,8 +34,26 @@ public class TransactionService {
     }
 
     //GET transaction por id
-    public Transaction getTransactionById(Long id) {
-        return transactionRepository.findById(id).orElseThrow(() -> new RuntimeException("Transaction was not found."));
+    public ResponseBodyTransaction getTransactionById(Long id) {
+        Transaction transaction = transactionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Transaction (" + id + ") was not found"));
+
+        return new ResponseBodyTransaction(
+          transaction.getAmount(),
+          transaction.getTransactionDate(),
+          transaction.getDescription()
+        );
+    }
+
+    //GET transaction por transactionDate
+    public ResponseBodyTransaction searchTransactionByDate(String transactionDate) {
+        Transaction transaction = transactionRepository.findByTransactionDate(transactionDate);
+
+        return new ResponseBodyTransaction(
+                transaction.getAmount(),
+                transaction.getTransactionDate(),
+                transaction.getDescription()
+        );
     }
 
     //POST

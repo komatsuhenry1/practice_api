@@ -2,9 +2,7 @@ package com.example.scionapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 //TODAS RELAÇÕES EM NOSSO ESQUEMA DE BANCO DE DADOS:
 //bank - client (um banco tem varios clientes)
@@ -12,6 +10,8 @@ import lombok.NoArgsConstructor;
 //client - account (um cliente tem uma conta)
 //account - transaction (uma conta tem varias transacoes)
 
+@Setter
+@Getter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -38,35 +38,4 @@ public class Transaction {
     @JoinColumn(name = "account_id", nullable = true)
     private Account account;
 
-    public Long getId() {return id;}
-
-    public void setId(Long id) {this.id = id;}
-
-    public String getAmount() {return amount;}
-
-    public void setAmount(String amount) {this.amount = amount;}
-
-    public String getTransactionDate() {return transactionDate;}
-
-    public void setTransactionDate(String transactionDate) {this.transactionDate = transactionDate;}
-
-    public String getDescription() {return description;}
-
-    public void setDescription(String description) {this.description = description;}
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }
