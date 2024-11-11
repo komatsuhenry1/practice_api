@@ -7,6 +7,7 @@ import com.example.scionapi.dto.response.ResponseBodyClientAccountBank;
 import com.example.scionapi.model.Account;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.model.Client;
+import com.example.scionapi.model.Transaction;
 import com.example.scionapi.repository.AccountRepository;
 import com.example.scionapi.repository.BankRepository;
 import com.example.scionapi.repository.ClientRepository;
@@ -14,6 +15,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,21 +24,49 @@ public class ClientService {
     //injecao de dependencia para poder usar o metodos do Java Persistence Api (JPA)
     @Autowired
     private ClientRepository clientRepository;
-    //injecao para poder pegar os atributos de estrangeiros da tabela bank
+    //injecao para poder pegar as FK da tabela bank
     @Autowired
     private BankRepository bankRepository;
     @Autowired
     private AccountRepository accountRepository;
 
     //get all
-    public List<Client> getAllClient() {
-        return clientRepository.findAll();
+    public List<ResponseBodyClient> getAllClient() {
+        List<Client> clients = clientRepository.findAll(); // cria uma lista de clients
+        List<ResponseBodyClient> responseBodyClients = new ArrayList<>(); // uma lista de ResponseBodyClient
+
+        //para cada client em List<Client> adiciona na List<ResponseBodyClient>
+        for (Client client : clients) {
+            responseBodyClients.add(new ResponseBodyClient(
+                    client.getId(),
+                    client.getName(),
+                    client.getPhone(),
+                    client.getCpf(),
+                    client.getEmail(),
+                    client.getAddress()
+            ));
+        }
+
+        return responseBodyClients; // returna a response
     }
 
     //get by id
-    public Client searchClientById(Long id) {
-        return clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client " + id + "was not found!"));
+    public ResponseBodyClient searchClientById(Long id) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Client (" + id + ") was not not found"));
+
+        List<Long> transactionIds = client.getTransactions().stream()
+                .map(Transaction::getId)
+                .toList();
+
+        return new ResponseBodyClient(
+                client.getId(),
+                client.getName(),
+                client.getCpf(),
+                client.getPhone(),
+                client.getEmail(),
+                client.getAddress()
+        );
     }
 
     //get by name
@@ -62,6 +92,13 @@ public class ClientService {
                 .orElseThrow(() -> new RuntimeException("Account " + bodyClient.account_id() + "was not found!"));
         Bank bank = bankRepository.findById(bodyClient.bank_id())
                 .orElseThrow(() -> new EntityNotFoundException("Bank "  + bodyClient.bank_id() +  " was not found!"));
+//        Client client = clientRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("Client (" + id + ") was not not found"));
+//
+//
+//        List<Long> transactionIds = client.getTransactions().stream()
+//                .map(Transaction::getId)
+//                .toList();
 
         Client client = new Client();
         client.setName(bodyClient.name());
@@ -81,8 +118,10 @@ public class ClientService {
                 client.getCpf(),
                 client.getEmail(),
                 client.getAddress(),
-                client.getBank().getId(),
-                client.getAccount().getId()
+                client.getAccount().getId(),
+                client.getBank().getId()
+//                transactionIds
+
         );
     }
 

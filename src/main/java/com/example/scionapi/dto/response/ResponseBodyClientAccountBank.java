@@ -1,5 +1,7 @@
 package com.example.scionapi.dto.response;
 
+import java.util.List;
+
 public record ResponseBodyClientAccountBank(
 
         Long id,
@@ -17,6 +19,9 @@ public record ResponseBodyClientAccountBank(
         Long account_id,
 
         Long bank_id
+
+//        List<Long> transactions
+
 
 
 ) {

@@ -20,14 +20,14 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<List<Client>> getAllClient() {
+    public ResponseEntity<List<ResponseBodyClient>> getAllClient() {
         return ResponseEntity.ok(clientService.getAllClient());
     }
 
     //GET
     //passando id
     @GetMapping("/id/{id}")
-    public ResponseEntity<Client> getClientbyId(@PathVariable Long id) {
+    public ResponseEntity<ResponseBodyClient> getClientbyId(@PathVariable Long id) {
         return ResponseEntity.ok(clientService.searchClientById(id));
     }
 

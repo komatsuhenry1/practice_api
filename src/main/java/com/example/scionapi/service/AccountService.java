@@ -68,7 +68,7 @@ public class AccountService {
     //POST
     //criar account (sem passar transactions)
     public ResponseBodyAccount createAccount(RequestBodyAccount bodyAccount) {
-        //        verifyAccount(bodyAccount.accountNumber());
+        verifyAccount(bodyAccount.accountNumber());
 
         Account account = new Account();
         account.setAccountNumber(bodyAccount.accountNumber());
@@ -90,7 +90,7 @@ public class AccountService {
     //POST
     //criar account (passando lista com transactionsIds
     public ResponseBodyAccountList createAccountWithTransactions(RequestBodyAccountTransaction bodyAccountTransaction) {
-        System.out.println("Entrou na SERVICE!");
+        verifyAccount(bodyAccountTransaction.accountNumber());
 
         List<Transaction> transactions = transactionRepository.findAllById(bodyAccountTransaction.transactionIds());
 
@@ -136,7 +136,7 @@ public class AccountService {
 
     //PUT
     //edita cliente
-    public Account updateAccount(Long id, Account bodyAccount) {
+    public ResponseBodyAccount updateAccount(Long id, Account bodyAccount) {
         Account account = findAccountById(id); // chama metodo para achar objeto account pelo id
         if(bodyAccount.getAccountType() != null) {
             account.setAccountType(bodyAccount.getAccountType());
@@ -150,7 +150,13 @@ public class AccountService {
         if(bodyAccount.getStatus() != null) {
             account.setStatus(bodyAccount.getStatus());
         }
-        return accountRepository.save(account);
+        return new ResponseBodyAccount(
+                account.getId(),
+                account.getAccountNumber(),
+                account.getAccountType(),
+                account.getBalance(),
+                account.getStatus()
+        );
     }
 
     //metodo para achar objeto account pelo id

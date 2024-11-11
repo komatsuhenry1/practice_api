@@ -100,4 +100,6 @@ public class Client {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+
 }
