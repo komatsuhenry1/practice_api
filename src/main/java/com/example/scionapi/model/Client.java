@@ -39,8 +39,8 @@ public class Client {
     private String address;
 
     //chave estrangeira na tabela client, que vem do id de bank
-    @ManyToOne
-    @JoinColumn(name = "bank_id", nullable = false)
+    @ManyToOne(optional = true) // define que pode ser nulo (tem q ter os dois)
+    @JoinColumn(name = "bank_id", nullable = true) // define que pode ser nulo (tem q ter os dois)
     private Bank bank;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)

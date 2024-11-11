@@ -1,6 +1,6 @@
 package com.example.scionapi.dto.request;
 
-public record RequestBodyClient(
+public record RequestBodyClientAccountBank(
 
         String name,
 
@@ -10,7 +10,11 @@ public record RequestBodyClient(
 
         String email,
 
-        String adress
+        String adress,
+
+        Long account_id,
+
+        Long bank_id
 
 ) {
 }

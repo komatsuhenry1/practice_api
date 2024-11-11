@@ -1,7 +1,9 @@
 package com.example.scionapi.controller;
 
 import com.example.scionapi.dto.request.RequestBodyTransaction;
+import com.example.scionapi.dto.request.RequestBodyTransactionClientAccount;
 import com.example.scionapi.dto.response.ResponseBodyTransaction;
+import com.example.scionapi.dto.response.ResponseBodyTransactionClientAccount;
 import com.example.scionapi.model.Transaction;
 import com.example.scionapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +19,47 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
+    //GET
+    //todos
     @GetMapping
     public ResponseEntity<List<Transaction>> getTransaction() {
         return ResponseEntity.ok(transactionService.getAllTransactions());
     }
 
+    //GET
+    //por id
     @GetMapping("{id}")
     public ResponseEntity<Transaction> getTransactionById(@PathVariable Long id) {
         return ResponseEntity.ok(transactionService.getTransactionById(id));
     }
 
-    @PostMapping
+    //GET
+    //por transactionDate
+
+
+    //POST
+    //passando client id e account id
+    @PostMapping("/transaction_client_account")
+    public ResponseEntity<ResponseBodyTransactionClientAccount> createTransactionWithClientAndAccount(@RequestBody RequestBodyTransactionClientAccount bodyTransactionClientAccount) {
+        return ResponseEntity.ok(transactionService.createTransactionWithClientAndAccount(bodyTransactionClientAccount));
+    }
+
+    //POST
+    //passando apenas atributos de transaction
+    @PostMapping("/post_transaction")
     public ResponseEntity<ResponseBodyTransaction> createTransaction(@RequestBody RequestBodyTransaction bodyTransaction) {
         return ResponseEntity.ok(transactionService.createTransaction(bodyTransaction));
     }
 
+    //PUT
+    //editar passando id
     @PutMapping("{id}")
-    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody RequestBodyTransaction bodyTransaction) {
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable Long id, @RequestBody RequestBodyTransactionClientAccount bodyTransaction) {
         return ResponseEntity.ok(transactionService.updateTransaction(id, bodyTransaction));
     }
 
+    //DELETE
+    //deletar passando id
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteTransaction(@PathVariable Long id){
         transactionService.deleteTransactionById(id);

@@ -104,6 +104,8 @@ public class BankService {
         bank.setPhone(bodybank.phone());
         bank.setAddress(bodybank.address());
 
+        bank = bankRepository.save(bank);
+
         return new ResponseBodyBank(
                 bank.getId(),
                 bank.getName(),

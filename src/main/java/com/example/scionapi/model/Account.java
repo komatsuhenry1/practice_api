@@ -36,7 +36,7 @@ public class Account {
 
     private String status;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
 

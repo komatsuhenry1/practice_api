@@ -1,6 +1,6 @@
 package com.example.scionapi.dto.response;
 
-public record ResponseBodyClient(
+public record ResponseBodyClientAccountBank(
 
         Long id,
 
@@ -12,7 +12,12 @@ public record ResponseBodyClient(
 
         String email,
 
-        String address
+        String adress,
+
+        Long account_id,
+
+        Long bank_id
+
 
 ) {
 }

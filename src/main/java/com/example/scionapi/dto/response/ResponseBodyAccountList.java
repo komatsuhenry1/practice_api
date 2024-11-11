@@ -12,6 +12,8 @@ public record ResponseBodyAccountList(
 
         String balance,
 
+        String status,
+
         List<Long> transactions
 
 ) {

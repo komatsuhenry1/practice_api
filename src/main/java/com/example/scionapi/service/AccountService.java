@@ -46,6 +46,7 @@ public class AccountService {
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
+                account.getStatus(),
                 transactionIds
         );
     }
@@ -57,8 +58,8 @@ public class AccountService {
 
         return new ResponseBodyAccount(
                 account.getAccount_id(),
-                account.getAccountType(),
                 account.getAccountNumber(),
+                account.getAccountType(),
                 account.getBalance(),
                 account.getStatus()
         );
@@ -89,9 +90,18 @@ public class AccountService {
     //POST
     //criar account (passando lista com transactionsIds
     public ResponseBodyAccountList createAccountWithTransactions(RequestBodyAccountTransaction bodyAccountTransaction) {
-        verifyAccount(bodyAccountTransaction.accountNumber());
+        System.out.println("Entrou na SERVICE!");
 
         List<Transaction> transactions = transactionRepository.findAllById(bodyAccountTransaction.transactionIds());
+
+        System.out.println("All transactions found: " + transactions.size());
+
+//        verifyAccount(bodyAccountTransaction.accountNumber());
+
+
+//        if (transactions.size() != transactionIds.size()) {
+//            throw new IllegalArgumentException("Alguns IDs de transações não foram encontrados no banco de dados.");
+//        }
 
         Account account = new Account();
         account.setAccountNumber(bodyAccountTransaction.accountNumber());
@@ -103,16 +113,17 @@ public class AccountService {
 
         account = accountRepository.save(account);
 
-        List<Long> transactionIds = transactions.stream()
+        List<Long> savedTransactionIds = transactions.stream()
                 .map(Transaction::getId)
                 .toList();
 
         return new ResponseBodyAccountList(
                 account.getId(),
                 account.getAccountNumber(),
+                account.getAccountType(),
                 account.getBalance(),
                 account.getStatus(),
-                transactionIds
+                savedTransactionIds
         );
     }
 

@@ -6,11 +6,8 @@ public record RequestBodyTransaction(
 
         String transactionDate,
 
-        String description,
+        String description
 
-        // IDs do cliente e da conta associados
-        Long clientId,
-
-        Long accountId
 ) {
+
 }

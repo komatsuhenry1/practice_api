@@ -1,5 +1,6 @@
 package com.example.scionapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,12 +30,12 @@ public class Transaction {
     private String description;
 
     //chave estrangeira na tabela transaction, que vem do id de client
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "client_id", nullable = true)
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "account_id", nullable = true)
     private Account account;
 
     public Long getId() {return id;}

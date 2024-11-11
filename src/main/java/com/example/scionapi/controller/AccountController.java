@@ -46,7 +46,7 @@ public class AccountController {
 
     //post de account (passando lista de transacoes)
     @PostMapping("/account_transaction")
-    public ResponseEntity<ResponseBodyAccountList> createAccountWithTransactions(RequestBodyAccountTransaction bodyAccountTransaction){
+    public ResponseEntity<ResponseBodyAccountList> createAccountWithTransactions(@RequestBody RequestBodyAccountTransaction bodyAccountTransaction){
         return ResponseEntity.ok(accountService.createAccountWithTransactions(bodyAccountTransaction));
     }
 

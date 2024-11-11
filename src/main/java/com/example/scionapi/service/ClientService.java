@@ -1,7 +1,9 @@
 package com.example.scionapi.service;
 
 import com.example.scionapi.dto.request.RequestBodyClient;
+import com.example.scionapi.dto.request.RequestBodyClientAccountBank;
 import com.example.scionapi.dto.response.ResponseBodyClient;
+import com.example.scionapi.dto.response.ResponseBodyClientAccountBank;
 import com.example.scionapi.model.Account;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.model.Client;
@@ -37,8 +39,24 @@ public class ClientService {
                 .orElseThrow(() -> new RuntimeException("Client " + id + "was not found!"));
     }
 
-    //post
-    public ResponseBodyClient createClient(RequestBodyClient bodyClient) {
+    //get by name
+    //retorna resposta basica (sem lista e campos de outras tabelas)
+    public ResponseBodyClient searchClientByName(String name) {
+        Client client = clientRepository.findByName(name);
+
+        return new ResponseBodyClient(
+                client.getId(),
+                client.getName(),
+                client.getPhone(),
+                client.getCpf(),
+                client.getEmail(),
+                client.getAddress()
+        );
+    }
+
+    //POST
+    //passando client
+    public ResponseBodyClientAccountBank createClientWithFK(RequestBodyClientAccountBank bodyClient) {
         verifyClient(bodyClient.cpf());
         Account account = accountRepository.findById(bodyClient.account_id())
                 .orElseThrow(() -> new RuntimeException("Account " + bodyClient.account_id() + "was not found!"));
@@ -56,7 +74,7 @@ public class ClientService {
 
         client = clientRepository.save(client);
 
-        return new ResponseBodyClient(
+        return new ResponseBodyClientAccountBank(
                 client.getId(),
                 client.getName(),
                 client.getPhone(),
@@ -68,6 +86,31 @@ public class ClientService {
         );
     }
 
+    //POST
+    //passando client account id e bank id
+    public ResponseBodyClient createClient(RequestBodyClient bodyClient) {
+        verifyClient(bodyClient.cpf());
+
+        Client client = new Client();
+        client.setName(bodyClient.name());
+        client.setPhone(bodyClient.phone());
+        client.setCpf(bodyClient.cpf());
+        client.setEmail(bodyClient.email());
+        client.setAddress(bodyClient.adress());
+
+        client = clientRepository.save(client);
+
+        return new ResponseBodyClient(
+                client.getId(),
+                client.getName(),
+                client.getPhone(),
+                client.getCpf(),
+                client.getAddress(),
+                client.getEmail()
+        );
+    }
+
+    //metodo de verificacao
     //verifica se o cpf ja existe na tabela
     public void verifyClient(String cpf) {
         Client client = clientRepository.findByCpf(cpf);
@@ -76,7 +119,8 @@ public class ClientService {
         }
     }
 
-    //put
+    //PUT
+    //editar algum campo (passando id)
     public Client updateClient(Long id, Client bodyClient) {
         Client client = findClientById(id);
         if (bodyClient.getName() != null) {
@@ -98,12 +142,15 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
+    //metodo de verificacao
     //procura por id
     public Client findClientById(Long id) {
         return clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bank with ID " + id + " was not found." ));
     }
 
+    //DELETE
+    //deletar cliente (passando id)
     public void deleteClient(Long id) {
         Client client = findClientById(id);
         clientRepository.deleteById(client.getId());
