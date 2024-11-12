@@ -4,6 +4,7 @@ import com.example.scionapi.dto.request.RequestBodyClient;
 import com.example.scionapi.dto.request.RequestBodyClientAccountBank;
 import com.example.scionapi.dto.response.ResponseBodyClient;
 import com.example.scionapi.dto.response.ResponseBodyClientAccountBank;
+import com.example.scionapi.exception.ClientCpfAlreadyExistsException;
 import com.example.scionapi.model.Account;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.model.Client;
@@ -154,7 +155,7 @@ public class ClientService {
     public void verifyClient(String cpf) {
         Client client = clientRepository.findByCpf(cpf);
         if(client != null) {
-            throw new RuntimeException("Client with cpf (" + cpf + ") already exists!");
+            throw new ClientCpfAlreadyExistsException("Client with cpf (" + cpf + ") already exists!");
         }
     }
 

@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
         // Iterar sobre os erros dos campos
         for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             // Adiciona os erros ao map, onde a chave é o nome do campo e o valor é a mensagem de erro
-            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage()); // Field = chave | DefaultMessage = mensagem de erro (DTO)
         }
 
         // Retorna a resposta com o status de BAD_REQUEST e as mensagens de erro no corpo
@@ -40,6 +40,27 @@ public class GlobalExceptionHandler {
             errorMap.put(violation.getPropertyPath().toString(), violation.getMessage());
         });
 
+        return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ClientCpfAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleClientCpfAlreadyExistsException(ClientCpfAlreadyExistsException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", ex.getMessage());
+        return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BankNameAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleBankNameAlreadyExistsException(BankNameAlreadyExistsException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", ex.getMessage());
+        return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccountNumberAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleAccountNumberAlreadyExistsException(AccountNumberAlreadyExistsException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", ex.getMessage());
         return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
     }
 

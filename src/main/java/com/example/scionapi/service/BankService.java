@@ -5,6 +5,7 @@ import com.example.scionapi.dto.request.RequestBodyBank;
 import com.example.scionapi.dto.request.RequestBodyBankClient;
 import com.example.scionapi.dto.response.ResponseBodyBank;
 import com.example.scionapi.dto.response.ResponseBodyBankList;
+import com.example.scionapi.exception.BankNameAlreadyExistsException;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.model.Client;
 import com.example.scionapi.repository.BankRepository;
@@ -134,7 +135,7 @@ public class BankService {
     public void verifyBank(String name) {
         Bank bank = bankRepository.findByName(name);
         if(bank != null) { // estiver preenchido
-            throw new RuntimeException("Client with name " + name + "already exists!");
+            throw new BankNameAlreadyExistsException("Client with name (" + name + ") already exists!");
         }
     }
 

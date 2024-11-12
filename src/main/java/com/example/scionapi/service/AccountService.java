@@ -4,6 +4,7 @@ import com.example.scionapi.dto.request.RequestBodyAccount;
 import com.example.scionapi.dto.request.RequestBodyAccountTransaction;
 import com.example.scionapi.dto.response.ResponseBodyAccount;
 import com.example.scionapi.dto.response.ResponseBodyAccountList;
+import com.example.scionapi.exception.AccountNumberAlreadyExistsException;
 import com.example.scionapi.model.Account;
 import com.example.scionapi.model.Transaction;
 import com.example.scionapi.repository.AccountRepository;
@@ -144,7 +145,7 @@ public class AccountService {
     public void verifyAccount(int number) {
         Account account = accountRepository.findByAccountNumber(number);
         if(account != null) {
-            throw new RuntimeException("Account with number " + number + " already exists.");
+            throw new AccountNumberAlreadyExistsException("Account with number (" + number + ") already exists.");
         }
     }
 
