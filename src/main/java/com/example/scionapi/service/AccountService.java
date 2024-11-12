@@ -12,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
     @Service
@@ -27,8 +28,21 @@ public class AccountService {
 
     //GET
     // pega todas as contas
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    public List<ResponseBodyAccount> getAllAccounts() {
+        List<Account> accounts = accountRepository.findAll();
+        List<ResponseBodyAccount> responseBodyAccounts = new ArrayList<>();
+
+        for(Account account : accounts) {
+            responseBodyAccounts.add(new ResponseBodyAccount(
+                    account.getId(),
+                    account.getAccountNumber(),
+                    account.getAccountType(),
+                    account.getBalance(),
+                    account.getStatus()
+            ));
+        }
+
+        return responseBodyAccounts;
     }
 
     //GET

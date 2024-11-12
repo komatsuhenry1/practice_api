@@ -13,6 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,8 +27,21 @@ public class BankService {
 
     //GET
     //get all
-    public List<Bank> getAllBanks() {
-        return bankRepository.findAll();
+    public List<ResponseBodyBank> getAllBanks() {
+        List<Bank> banks = bankRepository.findAll();
+        List<ResponseBodyBank> responseBodyBanks = new ArrayList<>();
+
+        //para cada bank em List<Bank> adiciona na List<ResponseBodyBank>
+        for (Bank bank : banks) {
+            responseBodyBanks.add(new ResponseBodyBank(
+                    bank.getId(),
+                    bank.getName(),
+                    bank.getEmail(),
+                    bank.getPhone(),
+                    bank.getAddress()
+            ));
+        }
+        return responseBodyBanks;
     }
 
     //GET

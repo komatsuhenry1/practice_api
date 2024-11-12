@@ -47,7 +47,7 @@ public class ClientService {
             ));
         }
 
-        return responseBodyClients; // returna a response
+        return responseBodyClients; // retorna a response
     }
 
     //get by id

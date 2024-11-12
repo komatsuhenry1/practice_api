@@ -22,7 +22,7 @@ public class AccountController {
 
     //get de account com lista de transacoes
     @GetMapping("get_accounts")
-    public ResponseEntity<List<Account>> getAllAccount() {
+    public ResponseEntity<List<ResponseBodyAccount>> getAllAccount() {
         return ResponseEntity.ok(accountService.getAllAccounts());
     }
 

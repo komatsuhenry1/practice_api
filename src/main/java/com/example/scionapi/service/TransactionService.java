@@ -13,6 +13,7 @@ import com.example.scionapi.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,8 +30,19 @@ public class TransactionService {
     private ClientRepository clientRepository;
 
     //GET all transaction
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public List<ResponseBodyTransaction> getAllTransactions() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        List<ResponseBodyTransaction> responseBodyTransactions = new ArrayList<>();
+
+        for(Transaction transaction : transactions) {
+            responseBodyTransactions.add(new ResponseBodyTransaction(
+                    transaction.getId(),
+                    transaction.getAmount(),
+                    transaction.getTransactionDate(),
+                    transaction.getDescription()
+            ));
+        }
+        return responseBodyTransactions;
     }
 
     //GET transaction por id
@@ -39,6 +51,7 @@ public class TransactionService {
                 .orElseThrow(() -> new RuntimeException("Transaction (" + id + ") was not found"));
 
         return new ResponseBodyTransaction(
+          transaction.getId(),
           transaction.getAmount(),
           transaction.getTransactionDate(),
           transaction.getDescription()
@@ -50,6 +63,7 @@ public class TransactionService {
         Transaction transaction = transactionRepository.findByTransactionDate(transactionDate);
 
         return new ResponseBodyTransaction(
+                transaction.getId(),
                 transaction.getAmount(),
                 transaction.getTransactionDate(),
                 transaction.getDescription()
@@ -98,6 +112,7 @@ public class TransactionService {
         transaction = transactionRepository.save(transaction);
 
         return new ResponseBodyTransaction(
+                transaction.getId(),
                 transaction.getAmount(),
                 transaction.getTransactionDate(),
                 transaction.getDescription()

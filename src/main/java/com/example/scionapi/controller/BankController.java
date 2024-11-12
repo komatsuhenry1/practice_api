@@ -21,7 +21,7 @@ public class BankController {
 
     //get all banks
     @GetMapping("/get_banks")
-    public ResponseEntity<List<Bank>> getBanks() {
+    public ResponseEntity<List<ResponseBodyBank>> getBanks() {
         return ResponseEntity.ok(bankService.getAllBanks());
     }
 

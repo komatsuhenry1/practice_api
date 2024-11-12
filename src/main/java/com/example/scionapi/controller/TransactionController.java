@@ -22,7 +22,7 @@ public class TransactionController {
     //GET
     //todos
     @GetMapping
-    public ResponseEntity<List<Transaction>> getTransaction() {
+    public ResponseEntity<List<ResponseBodyTransaction>> getTransaction() {
         return ResponseEntity.ok(transactionService.getAllTransactions());
     }
 
