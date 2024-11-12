@@ -19,9 +19,6 @@ public record RequestBodyClientAccountBank(
         @Pattern(regexp = "\\d{11}", message = "CPF must contain only numbers.")
         String cpf,
 
-        @NotBlank(message = "Field 'email' cannot be blank/null.")
-        String email,
-
         @NotBlank(message = "Field 'address' cannot be blank/null.")
         String address,
 

@@ -12,8 +12,6 @@ public record ResponseBodyClientAccountBank(
 
         String cpf,
 
-        String email,
-
         String adress,
 
         Long account_id,

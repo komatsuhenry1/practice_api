@@ -19,10 +19,6 @@ public record RequestBodyClient(
         @Pattern(regexp = "\\d{11}", message = "CPF must contain only numbers.")
         String cpf,
 
-        @NotBlank(message = "Field 'email' cannot be blank/null.")
-        @Email(message = "Please fill 'email' with a valid format.")
-        String email,
-
         @NotBlank(message = "Field 'address' cannot be blank/null.")
         String address
 

@@ -1,9 +1,6 @@
 package com.example.scionapi.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -26,10 +23,12 @@ public record RequestBodyAccountTransaction(
         @Email(message = "Please fill 'email' with a valid format.")
         String email,
 
-        @NotBlank(message = "Field 'password' cannot be blank/null.")
+        @NotNull(message = "Field 'transactionIds' cannot be null, fill with existing/unique transaction IDS.")
+        @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
+        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).*",
+                message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, and one special character")
         String password,
 
-        @NotNull(message = "Field 'transactionIds' cannot be null, fill with existing/unique transaction IDS.")
         // lista de ids das transactions
         List<Long> transactionIds
 

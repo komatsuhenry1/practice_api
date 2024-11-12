@@ -10,8 +10,6 @@ public record ResponseBodyClient(
 
         String cpf,
 
-        String email,
-
         String address
 
 ) {

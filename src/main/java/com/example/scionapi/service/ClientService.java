@@ -43,7 +43,6 @@ public class ClientService {
                     client.getName(),
                     client.getPhone(),
                     client.getCpf(),
-                    client.getEmail(),
                     client.getAddress()
             ));
         }
@@ -65,7 +64,6 @@ public class ClientService {
                 client.getName(),
                 client.getCpf(),
                 client.getPhone(),
-                client.getEmail(),
                 client.getAddress()
         );
     }
@@ -80,7 +78,6 @@ public class ClientService {
                 client.getName(),
                 client.getPhone(),
                 client.getCpf(),
-                client.getEmail(),
                 client.getAddress()
         );
     }
@@ -105,7 +102,6 @@ public class ClientService {
         client.setName(bodyClient.name());
         client.setAddress(bodyClient.address());
         client.setCpf(bodyClient.cpf());
-        client.setEmail(bodyClient.email());
         client.setPhone(bodyClient.phone());
         client.setAccount(account);
         client.setBank(bank);
@@ -117,7 +113,6 @@ public class ClientService {
                 client.getName(),
                 client.getPhone(),
                 client.getCpf(),
-                client.getEmail(),
                 client.getAddress(),
                 client.getAccount().getId(),
                 client.getBank().getId()
@@ -135,7 +130,6 @@ public class ClientService {
         client.setName(bodyClient.name());
         client.setPhone(bodyClient.phone());
         client.setCpf(bodyClient.cpf());
-        client.setEmail(bodyClient.email());
         client.setAddress(bodyClient.address());
 
         client = clientRepository.save(client);
@@ -145,8 +139,7 @@ public class ClientService {
                 client.getName(),
                 client.getPhone(),
                 client.getCpf(),
-                client.getAddress(),
-                client.getEmail()
+                client.getAddress()
         );
     }
 
@@ -167,13 +160,10 @@ public class ClientService {
             client.setName(bodyClient.getName());
         }
         if (bodyClient.getCpf() != null) {
-            client.setEmail(bodyClient.getCpf());
+            client.setCpf(bodyClient.getCpf());
         }
         if (bodyClient.getPhone() != null) {
             client.setPhone(bodyClient.getPhone());
-        }
-        if (bodyClient.getEmail() != null) {
-            client.setEmail(bodyClient.getEmail());
         }
         if (bodyClient.getAddress() != null) {
             client.setAddress(bodyClient.getAddress());
