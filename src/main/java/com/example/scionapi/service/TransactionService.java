@@ -73,7 +73,7 @@ public class TransactionService {
     //POST
     //passando ID de client e de account
     public ResponseBodyTransactionClientAccount createTransactionWithClientAndAccount(RequestBodyTransactionClientAccount bodyTransaction) {
-        Account account = accountRepository.findById(bodyTransaction.clientId())
+        Account account = accountRepository.findById(bodyTransaction.accountId())
                 .orElseThrow(() -> new RuntimeException("Account was not found."));
         Client client = clientRepository.findById(bodyTransaction.clientId())
                 .orElseThrow(() -> new RuntimeException("Client " + bodyTransaction.clientId() + "was not found."));
@@ -91,8 +91,9 @@ public class TransactionService {
                 transaction1.getAmount(),
                 transaction1.getTransactionDate(),
                 transaction1.getDescription(),
-                transaction1.getAccount().getId(),
-                transaction1.getClient().getId()
+                transaction1.getClient().getId(),
+                transaction1.getAccount().getId()
+
         );
     }
 

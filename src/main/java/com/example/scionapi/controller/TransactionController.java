@@ -6,6 +6,7 @@ import com.example.scionapi.dto.response.ResponseBodyTransaction;
 import com.example.scionapi.dto.response.ResponseBodyTransactionClientAccount;
 import com.example.scionapi.model.Transaction;
 import com.example.scionapi.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,14 +45,14 @@ public class TransactionController {
     //POST
     //passando client id e account id
     @PostMapping("/transaction_client_account")
-    public ResponseEntity<ResponseBodyTransactionClientAccount> createTransactionWithClientAndAccount(@RequestBody RequestBodyTransactionClientAccount bodyTransactionClientAccount) {
+    public ResponseEntity<ResponseBodyTransactionClientAccount> createTransactionWithClientAndAccount(@RequestBody @Valid RequestBodyTransactionClientAccount bodyTransactionClientAccount) {
         return ResponseEntity.ok(transactionService.createTransactionWithClientAndAccount(bodyTransactionClientAccount));
     }
 
     //POST
     //passando apenas atributos de transaction
     @PostMapping
-    public ResponseEntity<ResponseBodyTransaction> createTransaction(@RequestBody RequestBodyTransaction bodyTransaction) {
+    public ResponseEntity<ResponseBodyTransaction> createTransaction(@RequestBody @Valid RequestBodyTransaction bodyTransaction) {
         return ResponseEntity.ok(transactionService.createTransaction(bodyTransaction));
     }
 

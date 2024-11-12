@@ -6,6 +6,7 @@ import com.example.scionapi.dto.response.ResponseBodyClient;
 import com.example.scionapi.dto.response.ResponseBodyClientAccountBank;
 import com.example.scionapi.model.Client;
 import com.example.scionapi.service.ClientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +42,14 @@ public class ClientController {
     //POST
     //passando apenas atributos de cliente e FK
     @PostMapping("/full_create")
-    public ResponseEntity<ResponseBodyClientAccountBank> createClient(@RequestBody RequestBodyClientAccountBank bodyClient){
+    public ResponseEntity<ResponseBodyClientAccountBank> createClientFK(@RequestBody @Valid RequestBodyClientAccountBank bodyClient){
         return ResponseEntity.ok(clientService.createClientWithFK(bodyClient));
     }
 
     //POST
     //passando apenas atributos de cliente
     @PostMapping
-    public ResponseEntity<ResponseBodyClient> createClient(@RequestBody RequestBodyClient bodyClient){
+    public ResponseEntity<ResponseBodyClient> createClient(@RequestBody @Valid RequestBodyClient bodyClient){
         return ResponseEntity.ok(clientService.createClient(bodyClient));
     }
 

@@ -6,6 +6,7 @@ import com.example.scionapi.dto.response.ResponseBodyBank;
 import com.example.scionapi.dto.response.ResponseBodyBankList;
 import com.example.scionapi.model.Bank;
 import com.example.scionapi.service.BankService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +40,13 @@ public class BankController {
 
     //post passando lista de id
     @PostMapping("/bank_client")
-    public ResponseEntity<ResponseBodyBankList> createBankWithClient(@RequestBody RequestBodyBankClient bodyBank) {
+    public ResponseEntity<ResponseBodyBankList> createBankWithClient(@RequestBody @Valid RequestBodyBankClient bodyBank) {
         return ResponseEntity.ok(bankService.createBankWithClient(bodyBank));
     }
 
     //post sem lista de clientes
     @PostMapping
-    public ResponseEntity<ResponseBodyBank> createBank(@RequestBody RequestBodyBank bodyBank) {
+    public ResponseEntity<ResponseBodyBank> createBank(@RequestBody @Valid RequestBodyBank bodyBank) {
         return ResponseEntity.ok(bankService.createBank(bodyBank));
     }
 

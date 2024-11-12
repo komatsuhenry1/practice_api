@@ -102,7 +102,7 @@ public class ClientService {
 
         Client client = new Client();
         client.setName(bodyClient.name());
-        client.setAddress(bodyClient.adress());
+        client.setAddress(bodyClient.address());
         client.setCpf(bodyClient.cpf());
         client.setEmail(bodyClient.email());
         client.setPhone(bodyClient.phone());
@@ -135,7 +135,7 @@ public class ClientService {
         client.setPhone(bodyClient.phone());
         client.setCpf(bodyClient.cpf());
         client.setEmail(bodyClient.email());
-        client.setAddress(bodyClient.adress());
+        client.setAddress(bodyClient.address());
 
         client = clientRepository.save(client);
 

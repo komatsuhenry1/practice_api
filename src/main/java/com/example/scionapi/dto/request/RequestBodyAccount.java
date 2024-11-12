@@ -10,16 +10,13 @@ public record RequestBodyAccount(
         @NotNull(message = "Field 'accountNumber' cannot be null.")
         Integer accountNumber,
 
-        @NotNull(message = "Field 'accountType' cannot be null.")
-        @NotBlank(message = "Field 'accountType' cannot be blank.")
+        @NotBlank(message = "Field 'accountType' cannot be blank//null.")
         String accountType,
 
-        @NotNull(message = "Field 'balance' cannot be null.")
-        @NotBlank(message = "Field 'balance' cannot be blank.")
+        @NotBlank(message = "Field 'balance' cannot be blank/null.")
         String balance,
 
-        @NotNull(message = "Field 'status' cannot be null.")
-        @NotBlank(message = "Field 'status' cannot be blank.")
+        @NotBlank(message = "Field 'status' cannot be blank/null.")
         String status
 
 ) {
