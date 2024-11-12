@@ -35,6 +35,12 @@ public class Account {
 
     private String status;
 
+    private String email;
+
+    private String password;
+
+
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Transaction> transactions = new ArrayList<>();
@@ -91,4 +97,12 @@ public class Account {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    public String getEmail() {return email;}
+
+    public void setEmail(String email) {this.email = email;}
+
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
 }

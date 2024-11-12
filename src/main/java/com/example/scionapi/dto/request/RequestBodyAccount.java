@@ -1,5 +1,6 @@
 package com.example.scionapi.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -17,7 +18,14 @@ public record RequestBodyAccount(
         String balance,
 
         @NotBlank(message = "Field 'status' cannot be blank/null.")
-        String status
+        String status,
+
+        @NotBlank(message ="Field 'email' cannot be blank/null.")
+        @Email(message = "Please fill 'email' with a valid format.")
+        String email,
+
+        @NotBlank(message = "Field 'password' cannot be blank/null.")
+        String password
 
 ) {
 }

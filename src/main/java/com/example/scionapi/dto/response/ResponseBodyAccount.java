@@ -10,6 +10,10 @@ public record ResponseBodyAccount(
 
         String balance,
 
-        String status
+        String status,
+
+        String email,
+
+        String password
 ) {
 }

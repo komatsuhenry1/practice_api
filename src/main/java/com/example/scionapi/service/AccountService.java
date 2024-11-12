@@ -39,7 +39,9 @@ public class AccountService {
                     account.getAccountNumber(),
                     account.getAccountType(),
                     account.getBalance(),
-                    account.getStatus()
+                    account.getStatus(),
+                    account.getEmail(),
+                    account.getPassword()
             ));
         }
 
@@ -62,6 +64,8 @@ public class AccountService {
                 account.getAccountType(),
                 account.getBalance(),
                 account.getStatus(),
+                account.getEmail(),
+                account.getPassword(),
                 transactionIds
         );
     }
@@ -76,7 +80,9 @@ public class AccountService {
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
-                account.getStatus()
+                account.getStatus(),
+                account.getEmail(),
+                account.getPassword()
         );
     }
 
@@ -90,6 +96,8 @@ public class AccountService {
         account.setAccountType(bodyAccount.accountType());
         account.setBalance(bodyAccount.balance());
         account.setStatus(bodyAccount.status());
+        account.setEmail(bodyAccount.email());
+        account.setPassword(bodyAccount.password());
 
         account = accountRepository.save(account);
 
@@ -98,7 +106,9 @@ public class AccountService {
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
-                account.getStatus()
+                account.getStatus(),
+                account.getEmail(),
+                account.getPassword()
         );
     }
 
@@ -123,6 +133,8 @@ public class AccountService {
         account.setAccountType(bodyAccountTransaction.accountType());
         account.setBalance(bodyAccountTransaction.balance());
         account.setStatus(bodyAccountTransaction.status());
+        account.setEmail(bodyAccountTransaction.email());
+        account.setPassword(bodyAccountTransaction.password());
 
         account.setTransactions(transactions);
 
@@ -138,6 +150,8 @@ public class AccountService {
                 account.getAccountType(),
                 account.getBalance(),
                 account.getStatus(),
+                account.getEmail(),
+                account.getPassword(),
                 savedTransactionIds
         );
     }
@@ -170,7 +184,9 @@ public class AccountService {
                 account.getAccountNumber(),
                 account.getAccountType(),
                 account.getBalance(),
-                account.getStatus()
+                account.getStatus(),
+                account.getEmail(),
+                account.getPassword()
         );
     }
 

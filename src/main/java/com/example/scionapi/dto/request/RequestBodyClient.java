@@ -1,5 +1,6 @@
 package com.example.scionapi.dto.request;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -19,6 +20,7 @@ public record RequestBodyClient(
         String cpf,
 
         @NotBlank(message = "Field 'email' cannot be blank/null.")
+        @Email(message = "Please fill 'email' with a valid format.")
         String email,
 
         @NotBlank(message = "Field 'address' cannot be blank/null.")

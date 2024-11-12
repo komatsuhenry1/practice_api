@@ -14,6 +14,10 @@ public record ResponseBodyAccountList(
 
         String status,
 
+        String email,
+
+        String password,
+
         List<Long> transactions
 
 ) {
