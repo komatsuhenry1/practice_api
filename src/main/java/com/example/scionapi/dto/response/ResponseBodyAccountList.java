@@ -6,7 +6,7 @@ public record ResponseBodyAccountList(
 
         Long id,
 
-        String accountNumber,
+        Integer accountNumber,
 
         String accountType,
 

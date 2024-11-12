@@ -67,7 +67,7 @@ public class AccountService {
 
     //GET
     //pega conta pelo numero (accountNumber) / retorna sem lista de accountId
-    public ResponseBodyAccount getAccountByAccountNumber(String accountNumber) {
+    public ResponseBodyAccount getAccountByAccountNumber(Integer accountNumber) {
         Account account = accountRepository.findByAccountNumber(accountNumber);
 
         return new ResponseBodyAccount(
@@ -141,7 +141,7 @@ public class AccountService {
         );
     }
 
-    public void verifyAccount(String number) {
+    public void verifyAccount(int number) {
         Account account = accountRepository.findByAccountNumber(number);
         if(account != null) {
             throw new RuntimeException("Account with number " + number + " already exists.");

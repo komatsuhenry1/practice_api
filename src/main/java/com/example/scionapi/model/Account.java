@@ -27,7 +27,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long account_id;
 
-    private String accountNumber;
+    private Integer accountNumber;
 
     private String accountType;
 
@@ -72,9 +72,9 @@ public class Account {
         this.status = status;
     }
 
-    public String getAccountNumber() {return accountNumber;}
+    public Integer getAccountNumber() {return accountNumber;}
 
-    public void setAccountNumber(String accountNumber) {this.accountNumber = accountNumber;}
+    public void setAccountNumber(Integer accountNumber) {this.accountNumber = accountNumber;}
 
     public Long getAccount_id() {
         return account_id;

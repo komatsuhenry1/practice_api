@@ -4,7 +4,7 @@ public record ResponseBodyAccount(
 
         Long id,
 
-        String accountNumber,
+        Integer accountNumber,
 
         String accountType,
 

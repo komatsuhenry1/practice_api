@@ -6,6 +6,7 @@ import com.example.scionapi.dto.response.ResponseBodyAccount;
 import com.example.scionapi.dto.response.ResponseBodyAccountList;
 import com.example.scionapi.model.Account;
 import com.example.scionapi.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class AccountController {
 
     //get de account passando o numero da conta (sem lista de transacoes)
     @GetMapping("/number/{accountNumber}")
-    public ResponseEntity<ResponseBodyAccount> getAccountByNumber(@PathVariable String accountNumber) {
+    public ResponseEntity<ResponseBodyAccount> getAccountByNumber(@PathVariable Integer accountNumber) {
         return ResponseEntity.ok(accountService.getAccountByAccountNumber(accountNumber));
     }
 
@@ -40,13 +41,13 @@ public class AccountController {
 
     //post de account (sem passar lista de transacoes)
     @PostMapping
-    public ResponseEntity<ResponseBodyAccount> createAccount(@RequestBody RequestBodyAccount bodyAccount) {
+    public ResponseEntity<ResponseBodyAccount> createAccount(@RequestBody @Valid RequestBodyAccount bodyAccount) {
         return ResponseEntity.ok(accountService.createAccount(bodyAccount));
     }
 
     //post de account (passando lista de transacoes)
     @PostMapping("/account_transaction")
-    public ResponseEntity<ResponseBodyAccountList> createAccountWithTransactions(@RequestBody RequestBodyAccountTransaction bodyAccountTransaction){
+    public ResponseEntity<ResponseBodyAccountList> createAccountWithTransactions(@RequestBody @Valid RequestBodyAccountTransaction bodyAccountTransaction){
         return ResponseEntity.ok(accountService.createAccountWithTransactions(bodyAccountTransaction));
     }
 
